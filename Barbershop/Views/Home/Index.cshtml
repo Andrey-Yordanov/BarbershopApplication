@@ -1,8 +1,12 @@
 ﻿@{
-    ViewData["Title"] = "Home Page";
+    ViewData["Title"] = "Начало";
 }
 
 <div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+    <h1 class="display-4">Добре дошли във Barber Booking System</h1>
+    <p>Онлайн платформа за резервация на часове за фризьорски услуги.</p>
+
+    <a asp-controller="Service" asp-action="All" class="btn btn-primary mt-3">
+        Разгледай услугите
+    </a>
 </div>
