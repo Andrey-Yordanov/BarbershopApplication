@@ -35,6 +35,12 @@ namespace Barbershop.Data.Configurations
                 .HasOne(s => s.Category)
                 .WithMany(c => c.Services)
                 .HasForeignKey(s => s.CategoryId);
+
+            entity
+                .HasData(
+            new Service { Id = 1, Name = "Мъжко подстригване", CategoryId = 1, Price = 15, DurationInMinutes = 30, Description = "Бързо и качествено подстригване" },
+            new Service { Id = 2, Name = "Женско боядисване", CategoryId = 2, Price = 50, DurationInMinutes = 90, Description = "Професионално боядисване с висококачествени бои" }
+        );
         }
     }
 }
