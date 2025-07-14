@@ -1,6 +1,7 @@
 ﻿using Barbershop.Data.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
+using System.Reflection.Emit;
 using static Barbershop.Common.EntityValidationConstants.Category;
 
 namespace Barbershop.Data.Configurations
@@ -22,6 +23,12 @@ namespace Barbershop.Data.Configurations
                 .WithOne(s => s.Category)
                 .HasForeignKey(s => s.CategoryId)
                 .OnDelete(DeleteBehavior.Restrict);
+
+            entity
+                .HasData(
+            new Category { Id = 1, Name = "Подстригване" },
+            new Category { Id = 2, Name = "Боядисване" }
+        );
         }
     }
 }
