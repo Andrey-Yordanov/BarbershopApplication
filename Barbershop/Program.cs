@@ -1,4 +1,4 @@
-using Barbershop.Data;
+﻿using Barbershop.Data;
 using Barbershop.Services.Contracts;
 using Barbershop.Services;
 using Microsoft.AspNetCore.Identity;
@@ -14,7 +14,13 @@ builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
 builder.Services.AddDefaultIdentity<IdentityUser>(options =>
 {
-    options.SignIn.RequireConfirmedAccount = true;
+
+    options.SignIn.RequireConfirmedAccount = false;
+
+    options.Password.RequireDigit = false;
+    options.Password.RequireNonAlphanumeric = false;
+    options.Password.RequireUppercase = false;
+    options.Password.RequireLowercase = false;
 })
 .AddEntityFrameworkStores<BarbershopDbContext>();
 
@@ -52,3 +58,5 @@ app.MapControllerRoute(
 app.MapRazorPages();
 
 app.Run();
+
+
