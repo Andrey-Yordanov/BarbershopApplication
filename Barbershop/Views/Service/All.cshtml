@@ -1,0 +1,39 @@
+﻿@model IEnumerable<Barbershop.ViewModels.ServiceViewModel>
+
+@{
+    ViewData["Title"] = "Всички услуги";
+}
+
+<h1>Всички услуги</h1>
+
+<!-- Бутон за създаване на нова услуга -->
+<a asp-action="Create" class="btn btn-primary mb-3">Създай нова услуга</a>
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Име</th>
+            <th>Описание</th>
+            <th>Цена</th>
+            <th>Продължителност (минути)</th>
+            <th>Категория</th>
+            <th>Действия</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var service in Model)
+        {
+            <tr>
+                <td>@service.Name</td>
+                <td>@service.Description</td>
+                <td>@service.Price.ToString("F2") лв.</td>
+                <td>@service.Duration</td>
+                <td>@service.CategoryName</td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@service.Id" class="btn btn-sm btn-warning">Редактирай</a>
+                    <a asp-action="Delete" asp-route-id="@service.Id" class="btn btn-sm btn-danger">Изтрий</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
