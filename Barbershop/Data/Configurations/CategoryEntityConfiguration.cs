@@ -27,7 +27,10 @@ namespace Barbershop.Data.Configurations
             entity
                 .HasData(
             new Category { Id = 1, Name = "Подстригване" },
-            new Category { Id = 2, Name = "Боядисване" }
+            new Category { Id = 2, Name = "Боядисване" },
+            new Category { Id = 3, Name = "Сешоар" },
+            new Category { Id = 4, Name = "Изправяне" },
+            new Category { Id = 5, Name = "Плитки" }
         );
         }
     }
