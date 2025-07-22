@@ -2,6 +2,7 @@
 using Barbershop.Services;
 using Barbershop.Services.Contracts;
 using Barbershop.ViewModels;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 
@@ -25,6 +26,7 @@ namespace Barbershop.Controllers
         }
 
         [HttpGet]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Create()
         {
             var categories = await _serviceService.GetAllCategoriesAsync();
@@ -35,6 +37,7 @@ namespace Barbershop.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Create(ServiceViewModel service)
         {
             if (!ModelState.IsValid)
@@ -69,6 +72,7 @@ namespace Barbershop.Controllers
         }
 
         [HttpGet]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Edit(int id)
         {
             var service = await _serviceService.GetByIdAsync(id);
@@ -85,6 +89,7 @@ namespace Barbershop.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Edit(int id, ServiceViewModel service)
         {
             if (id != service.Id)
@@ -104,6 +109,7 @@ namespace Barbershop.Controllers
         }
 
         [HttpGet]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Delete(int id)
         {
             var service = await _serviceService.GetByIdAsync(id);
@@ -114,6 +120,7 @@ namespace Barbershop.Controllers
         }
 
         [HttpPost, ActionName("Delete")]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
             var success = await _serviceService.DeleteAsync(id);
