@@ -1,4 +1,8 @@
-﻿@model IEnumerable<Barbershop.ViewModels.ServiceViewModel>
+﻿@using Microsoft.AspNetCore.Identity
+@model IEnumerable<Barbershop.ViewModels.ServiceViewModel>
+@inject UserManager<IdentityUser> UserManager
+@inject SignInManager<IdentityUser> SignInManager
+
 
 @{
     ViewData["Title"] = "Всички услуги";
@@ -6,8 +10,10 @@
 
 <h1>Всички услуги</h1>
 
-<!-- Бутон за създаване на нова услуга -->
-<a asp-action="Create" class="btn btn-primary mb-3">Създай нова услуга</a>
+@if (User.IsInRole("Admin"))
+{
+    <a asp-action="Create" class="btn btn-primary mb-3">Създай нова услуга</a>
+}
 
 <table class="table table-striped">
     <thead>
@@ -17,7 +23,10 @@
             <th>Цена</th>
             <th>Продължителност (минути)</th>
             <th>Категория</th>
-            <th>Действия</th>
+            @if(User.IsInRole("Admin") || User.IsInRole("User"))
+            {
+                <th>Действия</th>
+            }
         </tr>
     </thead>
     <tbody>
@@ -30,8 +39,15 @@
                 <td>@service.Duration</td>
                 <td>@service.CategoryName</td>
                 <td>
-                    <a asp-action="Edit" asp-route-id="@service.Id" class="btn btn-sm btn-warning">Редактирай</a>
-                    <a asp-action="Delete" asp-route-id="@service.Id" class="btn btn-sm btn-danger">Изтрий</a>
+                    @if (User.IsInRole("Admin"))
+                    {
+                        <a asp-action="Edit" asp-route-id="@service.Id" class="btn btn-sm btn-warning">Редактирай</a>
+                        <a asp-action="Delete" asp-route-id="@service.Id" class="btn btn-sm btn-danger">Изтрий</a>
+                    }
+                    @if (User.IsInRole("User"))
+                    {
+                        <a asp-controller="Appointment" asp-action="Book" asp-route-id="@service.Id" class="btn btn-success">Запази час</a>
+                    }
                 </td>
             </tr>
         }

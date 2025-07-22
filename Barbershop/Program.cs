@@ -1,10 +1,13 @@
-﻿using Barbershop.Data;
+using Barbershop.Data;
 using Barbershop.Services.Contracts;
 using Barbershop.Services;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using Barbershop.Data.Models;
 
-var builder = WebApplication.CreateBuilder(args);
+
+
+    var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection") ?? throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
@@ -22,6 +25,7 @@ builder.Services.AddDefaultIdentity<IdentityUser>(options =>
     options.Password.RequireUppercase = false;
     options.Password.RequireLowercase = false;
 })
+.AddRoles<IdentityRole>()
 .AddEntityFrameworkStores<BarbershopDbContext>();
 
 builder.Services.AddScoped<ICategoryService, CategoryService>();
@@ -57,6 +61,14 @@ app.MapControllerRoute(
     pattern: "{controller=Home}/{action=Index}/{id?}");
 app.MapRazorPages();
 
+using (var scope = app.Services.CreateScope())
+{
+    var services = scope.ServiceProvider;
+    await RoleSeeder.SeedRolesAsync(services);
+    await AdminSeeder.SeedAdminAsync(services);
+}
+
 app.Run();
+
 
 
