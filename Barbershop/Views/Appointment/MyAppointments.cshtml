@@ -1,0 +1,22 @@
+﻿@using Barbershop.ViewModels
+@model IEnumerable<AppointmentViewModel>
+
+<h2>My Appointments</h2>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Service</th>
+            <th>Date</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var appt in Model)
+        {
+            <tr>
+                <td>@appt.ServiceName</td>
+                <td>@appt.DateFormatted</td>
+            </tr>
+        }
+    </tbody>
+</table>
