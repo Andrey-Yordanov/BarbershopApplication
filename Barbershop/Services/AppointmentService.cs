@@ -94,5 +94,46 @@ namespace Barbershop.Services
 
             return available;
         }
+        public async Task<IEnumerable<AppointmentViewModel>> GetAllAsync()
+        {
+            return await dbContext.Appointments
+                .Include(a => a.Service)
+                .Select(a => new AppointmentViewModel
+                {
+                    Id = a.Id,
+                    ServiceName = a.Service.Name,
+                    AppointmentDate = a.AppointmentDate
+                })
+                .ToListAsync();
+        }
+        public async Task<IEnumerable<AppointmentViewModel>> GetByDateAsync(DateTime date)
+        {
+            var startOfDay = date.Date;
+            var endOfDay = startOfDay.AddDays(1);
+
+            var result = await dbContext.Appointments
+                .Where(a => a.AppointmentDate >= startOfDay && a.AppointmentDate < endOfDay)
+                .Include(a => a.Service)
+                .Include(a => a.User)
+                .Select(a => new AppointmentViewModel
+                {
+                    Id = a.Id,
+                    ServiceName = a.Service.Name,
+                    AppointmentDate = a.AppointmentDate,
+                    Username = a.User.UserName
+                })
+                .ToListAsync();
+
+            Console.WriteLine($"Appointments found for {date.ToShortDateString()}: {result.Count}");
+            return result;
+        }
+        public async Task<List<DateTime>> GetAllDatesWithAppointmentsAsync()
+        {
+            return await dbContext.Appointments
+                .Select(a => a.AppointmentDate.Date)
+                .Distinct()
+                .OrderBy(d => d)
+                .ToListAsync();
+        }
     }
 }
