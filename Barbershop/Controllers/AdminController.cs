@@ -15,22 +15,21 @@ namespace Barbershop.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> AllAppointments(string? date)
+        public async Task<IActionResult> AllAppointments(DateTime? date)
         {
-            Console.WriteLine($"Received date parameter: {date}");
-            if (string.IsNullOrEmpty(date))
+            if (date == null)
             {
                 var uniqueDates = await appointmentService.GetAllDatesWithAppointmentsAsync();
                 return View("AppointmentDates", uniqueDates);
             }
 
-            if (!DateTime.TryParse(date, out DateTime parsedDate))
-            {
-                return RedirectToAction("AllAppointments");
-            }
+            var normalizedDate = DateTime.SpecifyKind(date.Value.Date, DateTimeKind.Unspecified);
 
-            var appointments = await appointmentService.GetByDateAsync(parsedDate);
-            ViewBag.SelectedDate = parsedDate.ToString("yyyy-MM-dd");
+            Console.WriteLine($"[DEBUG] Normalized date: {normalizedDate} | Kind: {normalizedDate.Kind}");
+
+            var appointments = await appointmentService.GetByDateAsync(normalizedDate);
+            ViewBag.SelectedDate = normalizedDate.ToString("yyyy-MM-dd");
+
             return View("AppointmentsByDate", appointments);
         }
     }

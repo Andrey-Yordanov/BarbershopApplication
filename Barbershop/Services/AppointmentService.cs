@@ -20,8 +20,9 @@ namespace Barbershop.Services
             {
                 UserId = model.UserId,
                 ServiceId = model.ServiceId,
-                AppointmentDate = model.AppointmentDate,
+                AppointmentDate = model.AppointmentDate
             };
+
 
             await dbContext.Appointments.AddAsync(appointment);
             await dbContext.SaveChangesAsync();
@@ -108,24 +109,26 @@ namespace Barbershop.Services
         }
         public async Task<IEnumerable<AppointmentViewModel>> GetByDateAsync(DateTime date)
         {
-            var startOfDay = date.Date;
-            var endOfDay = startOfDay.AddDays(1);
+            var targetDate = date.Date;
 
-            var result = await dbContext.Appointments
-                .Where(a => a.AppointmentDate >= startOfDay && a.AppointmentDate < endOfDay)
-                .Include(a => a.Service)
-                .Include(a => a.User)
+            Console.WriteLine($"[DEBUG] Looking for appointments on: {targetDate:yyyy-MM-dd}");
+
+            List<AppointmentViewModel> results = await dbContext.Appointments
+                .Where(a => a.AppointmentDate.Date == targetDate)
                 .Select(a => new AppointmentViewModel
                 {
                     Id = a.Id,
                     ServiceName = a.Service.Name,
                     AppointmentDate = a.AppointmentDate,
-                    Username = a.User.UserName
+                    Username = dbContext.Users
+                                .Where(u => u.Id == a.UserId)
+                                .Select(u => u.UserName)
+                                .FirstOrDefault()!
                 })
                 .ToListAsync();
 
-            Console.WriteLine($"Appointments found for {date.ToShortDateString()}: {result.Count}");
-            return result;
+            Console.WriteLine($"Appointments found: {results.Count}");
+            return results;
         }
         public async Task<List<DateTime>> GetAllDatesWithAppointmentsAsync()
         {
