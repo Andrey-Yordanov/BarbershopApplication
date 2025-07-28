@@ -1,10 +1,10 @@
 ﻿@using Barbershop.ViewModels
 @model IEnumerable<AppointmentViewModel>
 @{
-    ViewData["Title"] = "Appointments for " + ViewBag.SelectedDate;
+    ViewData["Title"] = "Записани часове за " + ViewBag.SelectedDate;
 }
 
-<h2>Appointments for @ViewBag.SelectedDate</h2>
+<h2>Записани часове за @ViewBag.SelectedDate</h2>
 
 <table class="table">
     <thead>
@@ -26,4 +26,4 @@
     </tbody>
 </table>
 
-<a asp-controller="Admin" asp-action="AllAppointments">← Back to date list</a>
+<a asp-controller="Admin" asp-action="AllAppointments">← Назад</a>

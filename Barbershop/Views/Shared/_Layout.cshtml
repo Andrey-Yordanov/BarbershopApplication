@@ -27,13 +27,13 @@
                             if (User.IsInRole("Admin"))
                             {
                                 <li class="nav-item">
-                                    <a class="nav-link text-dark" asp-controller="Admin" asp-action="AllAppointments">All Appointments</a>
+                                    <a class="nav-link text-dark" asp-controller="Admin" asp-action="AllAppointments">Всички часове</a>
                                 </li>
                             }
                             else
                             {
                                 <li class="nav-item">
-                                    <a class="nav-link text-dark" asp-controller="Appointment" asp-action="MyAppointments">My Appointments</a>
+                                    <a class="nav-link text-dark" asp-controller="Appointment" asp-action="MyAppointments">Моите часове</a>
                                 </li>
                             }
                         }

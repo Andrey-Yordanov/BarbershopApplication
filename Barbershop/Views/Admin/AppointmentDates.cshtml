@@ -1,12 +1,12 @@
 ﻿@model IEnumerable<DateTime>
 
-<h2>Appointment Dates</h2>
+<h2>Дати</h2>
 
 <ul>
     @foreach (var date in Model)
     {
         <li>
-            <a asp-controller="Admin" asp-action="AllAppointments" asp-route-date="@($"{date:yyyy-MM-dd}")">
+            <a asp-controller="Admin" asp-action="AllAppointments" asp-route-date="@date.ToString("yyyy-MM-dd")">
                 @date.ToString("dd.MM.yyyy")
             </a>
         </li>
