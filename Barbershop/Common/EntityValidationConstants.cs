@@ -33,7 +33,7 @@ namespace Barbershop.Common
             public const int ContactEmailMinLength = 5;
             public const int ContactEmailMaxLength = 100;
 
-            public const int ContactMessageMinLength = 40;
+            public const int ContactMessageMinLength = 10;
             public const int ContactMessageMaxLength = 400;
         }
     }
