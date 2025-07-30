@@ -1,0 +1,33 @@
+﻿@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@using Barbershop.ViewModels
+@model IEnumerable<AppointmentViewModel>
+@{
+    ViewData["Title"] = "Записани часове за " + ViewBag.SelectedDate;
+}
+
+<h2>Записани часове за @ViewBag.SelectedDate</h2>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Service</th>
+            <th>Date & Time</th>
+            <th>User</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var appt in Model)
+        {
+            <tr>
+                <td>@appt.ServiceName</td>
+                <td>@appt.DateFormatted</td>
+                <td>@appt.Username</td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<a asp-controller="Admin" asp-action="AllAppointments">← Назад</a>
