@@ -8,7 +8,7 @@ namespace Barbershop.Data.Models
 
         public DateTime AppointmentDate { get; set; }
 
-        public string UserId { get; set; }
+        public string? UserId { get; set; }
         public ApplicationUser User { get; set; } = null!;
 
         public int ServiceId { get; set; }
