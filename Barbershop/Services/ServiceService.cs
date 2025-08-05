@@ -48,7 +48,7 @@ namespace Barbershop.Services
                 .FirstOrDefaultAsync();
         }
 
-        async Task<bool> IServiceService.CreateAsync(ServiceViewModel service)
+        public async Task<bool> CreateAsync(ServiceViewModel service)
         {
             if (service == null)
             {
@@ -77,7 +77,7 @@ namespace Barbershop.Services
             return true;
         }
 
-        async Task<bool> IServiceService.DeleteAsync(int id)
+        public async Task<bool> DeleteAsync(int id)
         {
             var service = await dbContext.Services.FindAsync(id);
             if (service == null)
@@ -89,7 +89,7 @@ namespace Barbershop.Services
             return true;
         }
 
-        async Task<bool> IServiceService.UpdateAsync(ServiceViewModel service)
+        public async Task<bool> UpdateAsync(ServiceViewModel service)
         {
             if (service == null)
                 return false;
