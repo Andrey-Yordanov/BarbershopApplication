@@ -138,5 +138,20 @@ namespace Barbershop.Services
                 .OrderBy(d => d)
                 .ToListAsync();
         }
+        public async Task<bool> CancelAsync(int id, string userId)
+        {
+            var appointment = await dbContext.Appointments
+                .FirstOrDefaultAsync(a => a.Id == id && a.UserId == userId);
+
+            if (appointment == null)
+            {
+                return false;
+            }
+
+            dbContext.Appointments.Remove(appointment);
+            await dbContext.SaveChangesAsync();
+            return true;
+        }
+
     }
 }

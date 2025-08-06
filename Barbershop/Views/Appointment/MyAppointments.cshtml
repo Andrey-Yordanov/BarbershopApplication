@@ -1,13 +1,24 @@
 ﻿@using Barbershop.ViewModels
+@using Microsoft.AspNetCore.Mvc.TagHelpers
 @model IEnumerable<AppointmentViewModel>
 
 <h2>My Appointments</h2>
+
+@if (TempData["SuccessMessage"] != null)
+{
+    <div class="alert alert-success">@TempData["SuccessMessage"]</div>
+}
+@if (TempData["ErrorMessage"] != null)
+{
+    <div class="alert alert-danger">@TempData["ErrorMessage"]</div>
+}
 
 <table class="table">
     <thead>
         <tr>
             <th>Service</th>
             <th>Date</th>
+            <th></th>
         </tr>
     </thead>
     <tbody>
@@ -16,6 +27,15 @@
             <tr>
                 <td>@appt.ServiceName</td>
                 <td>@appt.DateFormatted</td>
+                <td>
+                    <form asp-action="Cancel" asp-controller="Appointment" method="post">
+                        <input type="hidden" name="id" value="@appt.Id" />
+                        <button type="submit" class="btn btn-danger btn-sm"
+                                onclick="return confirm('Сигурни ли сте, че искате да откажете този час?');">
+                            Откажи
+                        </button>
+                    </form>
+                </td>
             </tr>
         }
     </tbody>

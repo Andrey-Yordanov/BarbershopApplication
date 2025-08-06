@@ -81,5 +81,28 @@ namespace Barbershop.Controllers
             var appointments = await appointmentService.GetAllByUserAsync(userId);
             return View(appointments);
         }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Cancel(int id)
+        {
+            var userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+
+            if (userId == null)
+                return RedirectToAction("Login", "Account");
+
+            var success = await appointmentService.CancelAsync(id, userId);
+
+            if (!success)
+            {
+                TempData["ErrorMessage"] = "Неуспешно отказване на час.";
+            }
+            else
+            {
+                TempData["SuccessMessage"] = "Часът беше отказан успешно.";
+            }
+
+            return RedirectToAction("MyAppointments");
+        }
     }
 }

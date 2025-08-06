@@ -11,5 +11,6 @@ namespace Barbershop.Services.Contracts
         Task<IEnumerable<AppointmentViewModel>> GetAllAsync();
         Task<IEnumerable<AppointmentViewModel>> GetByDateAsync(DateTime date);
         Task<List<DateTime>> GetAllDatesWithAppointmentsAsync();
+        Task<bool> CancelAsync(int id, string userId);
     }
 }
